@@ -1,60 +1,53 @@
-//각 이미지 표시 함수
-/*
-const showFlower = () => {
-    const imgView1 = document.querySelector("#imgView1") ;
-    const txtWrap = document.querySelector(".txtWrap") ;
-    const imgViewText = document.querySelector("#imgViewText") ;
-    imgView1.setAttribute("src", "./images/cityFlower.png") ;
-    imgViewText.innerHTML = "동백꽃" ;
-    txtWrap.style.display = "block" ;
-}
-const showBird = () => {
-    const imgView1 = document.querySelector("#imgView1") ;
-    const txtWrap = document.querySelector(".txtWrap") ;
-    const imgViewText = document.querySelector("#imgViewText") ;
-    imgView1.setAttribute("src", "./images/cityBird.png") ;
-    imgViewText.innerHTML = "갈매기" ;
-    txtWrap.style.display = "block" ;
-}
-const showFish = () => {
-    const imgView1 = document.querySelector("#imgView1") ;
-    const txtWrap = document.querySelector(".txtWrap") ;
-    const imgViewText = document.querySelector("#imgViewText") ;
-    imgView1.setAttribute("src", "./images/cityFish.png") ;
-    imgViewText.innerHTML = "고등어" ;
-    txtWrap.style.display = "block" ;
-}
-*/
-//하나의 함수로 처리
-const show = (idx) => {
-    const pngName = ['cityFlower', 'cityBird', 'cityFish'] ;
-    const txt = ['동백꽃', '갈매기', '고등어'] ;
+let n ;
 
-    console.log(pngName[idx], txt[idx]) ;
-
-    const imgView1 = document.querySelector("#imgView1") ;
-    const txtWrap = document.querySelector(".txtWrap") ;
-    const imgViewText = document.querySelector("#imgViewText") ;
-
-    imgView1.setAttribute("src", `./images/${pngName[idx]}.png`) ;
-    imgViewText.innerHTML = txt[idx] ;
-    txtWrap.style.display = "block" ;
+const showDice = () => {
+    n = Math.floor(Math.random() * 6)+1
+    console.log(n) ;
+    show("none", "block", "none", "none", "block") ;
 }
 
+// 주사위 번호 결과 확인
+const showOk = () => {
+    const radios = document.querySelectorAll("input[type=radio]") ;
 
-//DOM 로드 후
-document.addEventListener("DOMContentLoaded", () => {
-    /*
-    const imgIcon1 = document.querySelector("#imgIcon1") ;
-    const imgIcon2 = document.getElementById("imgIcon2") ;
-    const imgIcon3 = document.getElementById("imgIcon3") ;
-    imgIcon1.addEventListener("mouseover", () => show(0)) ;
-    imgIcon2.addEventListener("mouseover", () => show(1)) ;
-    imgIcon3.addEventListener("mouseover", () => show(2)) ;
-    */
-
-    const imgIconItems = document.querySelectorAll(".imgIconItem") ;
-    for(let [k, item] of imgIconItems.entries()) {
-        item.addEventListener("mouseover", () => show(k)) ;
+    //사용자가 선택한 숫자
+    let usern ;
+    for(let r of radios) {
+        if(r.checked) {
+            //숫자로 이루어진 문자열을 숫자로 변환
+            usern = parseInt(r.value) ;
+            break ; 
+        }
     }
+    console.log(n, usern) ;
+
+    let tag ;
+    //비교 연산자 === : == 비교
+    if(n===usern) tag = "o" ;
+    else tag = "x" ;
+
+    document.querySelector("form").reset() ;
+
+    document.querySelector("#s1").innerHTML = `<img src = "./images/${n}.png">` ;
+    document.querySelector("#s3").innerHTML = `<img src = "./images/${tag}.png">` ;
+    show("block", "none", "block", "block", "none") ;
+}
+
+//요소 보이기 함수
+const show = (dspS1,dspS2,dspS3,dspBt1,dspBt2) => {
+    const s1 = document.querySelector("#s1") ;
+    const s2 = document.querySelector("#s2") ;
+    const s3 = document.querySelector("#s3") ;
+    const bt1 = document.querySelector("#bt1") ;
+    const bt2 = document.querySelector("#bt2") ;
+
+    s1.style.display = dspS1 ;
+    s2.style.display = dspS2 ;
+    s3.style.display = dspS3 ;
+    bt1.style.display = dspBt1 ;
+    bt2.style.display = dspBt2 ;
+} 
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    show("none", "none", "none", "block", "none") ;
 }) ;
